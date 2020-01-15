@@ -1,6 +1,6 @@
 Function IsInArray(SearchString As String, arr As Variant) As Boolean
     ' Returns true if the given array <arr> contains the <SearchString>
-    ' For Microsoft Excel by Max Schmeling
+    ' Written by Max Schmeling
 
     Dim Item As Variant
     For Each Item In arr
@@ -15,7 +15,7 @@ End Function
 
 Function Length(arr As Variant) As Long
     ' Returns the amount of items in the array <arr>
-    ' For Microsoft Excel by Max Schmeling
+    ' Written by Max Schmeling
 
     If IsEmpty(arr) Then
        Length = 0
@@ -69,7 +69,6 @@ Function CountDistinctConditional(arr As Variant, _
     
     Dim Dict As Object
     Dim Item As Variant
-    Dim CrItem As Variant
     Dim r As Long
     Dim c As Long
     Dim SkipMulti As Boolean
@@ -83,8 +82,7 @@ Function CountDistinctConditional(arr As Variant, _
     
     For r = LBound(arr, 1) To UBound(arr, 1)
         Item = arr(r, TargetColumn)
-        CrItem = arr(r, CriteriaColumn)
-        If Criteria = CrItem Or SkipMulti Then
+        If Criteria = arr(r, CriteriaColumn) Or SkipMulti Then
             If Not Dict.exists(Item) Then
                 Dict.Add Item, Nothing
             End If
