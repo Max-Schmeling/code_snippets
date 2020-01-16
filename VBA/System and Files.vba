@@ -44,25 +44,24 @@ Function SaveWorkbookAs(Optional IntialFilename As String = "", Optional FileFor
 End Function
 
 
-Function DirectoryExistant(Directory As String) As Boolean
-    ' Returns true if the given <Directory> exists
-    On Error GoTo DirNotExists
-    Call ChDir(Directory)
-    DirectoryExistant = True
-    Exit Function
-DirNotExists:
-    DirectoryExistant = False
+Function FileExists(FilePath As String) As Boolean
+    ' Returns True if <FilePath> exists. False if not or if an error is raised
+    On Error Resume Next ' in case of illegal characters in <FilePath> or some system error
+    FileExists = IIf(FilePath = vbNullString, False, Dir(FilePath, vbNormal) > "")
+    On Error GoTo 0
 End Function
 
 
-Function FileExistant(FilePath As String) As Boolean
-     ' Returns true if <FilePath> exists
-     FileExistant = (Dir(FilePath ) > "")
+Function DirectoryExists(DirectoryPath As String) As Boolean
+    ' Returns True if the given <DirectoryPath> exists
+    On Error Resume Next
+    DirectoryExists = ((GetAttr(DirectoryPath) And vbDirectory) = vbDirectory)
+    On Error GoTo 0
 End Function
 
 
 Function IsOutlookOpen() As Boolean
-    ' Returns true if Outlook is currently running
+    ' Returns True if Outlook is currently running
     Dim OLApp As Object
     On Error Resume Next
     Set OLApp = GetObject(, "Outlook.Application")
@@ -76,7 +75,7 @@ End Function
 
 
 Function IsOutlookInstalled(Optional ShowPrompt As Boolean = False) As Boolean
-    ' Returns true if Outlook is installed, else False
+    ' Returns True if Outlook is installed, else False
     Dim OLApp As Object
     On Error GoTo NotInstalled
     Set OLApp = CreateObject("Outlook.Application")
