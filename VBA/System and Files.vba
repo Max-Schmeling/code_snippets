@@ -1,3 +1,59 @@
+Function GetFilename(Filepath As String, Optional PathSeparator As String = "\") As String
+    ' Extracts the filename from the given <Filepath> and returns it.
+    ' Written by Max Schmeling
+    GetFilename = Right(Filepath, Len(Filepath) - InStrRev(Filepath, PathSeparator))
+End Function
+
+
+Function GetFileBasename(Filepath As String, Optional PathSeparator As String = "\") As String
+    ' Extracts the filename from the given <Filepath> and returns it without the extension.
+    ' WARNING: If a directory is supplied instead of a filepath it will be treated as a file
+    '          if it does not end with a <FolderSeparator>. E.g. "C:\FolderOne\FolderTwo"
+    ' Written by Max Schmeling
+    Dim PosDot As Integer
+    Dim PosSep As Integer
+    PosDot = InStrRev(Filepath, ".")
+    PosSep = InStrRev(Filepath, PathSeparator)
+    If Trim$(Filepath) = vbNullString Then Exit Function
+    GetFileBasename = Mid(Filepath, PosSep + 1, IIf(PosDot < PosSep, Len(Filepath) - PosSep, PosDot - PosSep - 1))
+End Function
+
+
+Function GetFileExtension(Filepath As String, Optional PathSeparator As String = "\") As String
+    ' Extracts the extension of the given <Filepath> and returns it.
+    ' Written by Max Schmeling
+    Dim PosDot As Integer
+    PosDot = InStrRev(Filepath, ".")
+    GetFileExtension = Right(Filepath, IIf(PosDot < InStrRev(Filepath, PathSeparator), 0, Len(Filepath) - PosDot))
+End Function
+
+
+Function JoinPath(Path1 As String, Path2 As String, Optional PathSeparator As String = "\")
+    ' Returns <Path1> and <Path2> concatenated.
+    If Right$(Path1, 1) = PathSeparator Then
+        JoinPath = Path1 & Path2
+    Else
+        JoinPath = Path1 & PathSeparator & Path2
+    End If
+End Function
+
+
+Function FileExists(FilePath As String) As Boolean
+    ' Returns True if <FilePath> exists. False if not or if an error is raised
+    On Error Resume Next ' in case of illegal characters in <FilePath> or some system error
+    FileExists = IIf(FilePath = vbNullString, False, Dir(FilePath, vbNormal) > "")
+    On Error GoTo 0
+End Function
+
+
+Function DirectoryExists(DirectoryPath As String) As Boolean
+    ' Returns True if the given <DirectoryPath> exists
+    On Error Resume Next
+    DirectoryExists = ((GetAttr(DirectoryPath) And vbDirectory) = vbDirectory)
+    On Error GoTo 0
+End Function
+
+
 Function GetDesktop() As String
     ' Returns the path to the desktop
     Dim oWSHShell As Object
@@ -41,22 +97,6 @@ Function SaveWorkbookAs(Optional IntialFilename As String = "", Optional FileFor
     ' - XlFileFormat.xlExcel12 = 50
     ' - XlFileFormat.xlOpenXMLWorkbookMacroEnabled = 52
     SaveWorkbookAs = Application.Dialogs(xlDialogSaveAs).Show(Arg1:=IntialFilename, Arg2:=XlFileFormat.xlWorkbookDefault)
-End Function
-
-
-Function FileExists(FilePath As String) As Boolean
-    ' Returns True if <FilePath> exists. False if not or if an error is raised
-    On Error Resume Next ' in case of illegal characters in <FilePath> or some system error
-    FileExists = IIf(FilePath = vbNullString, False, Dir(FilePath, vbNormal) > "")
-    On Error GoTo 0
-End Function
-
-
-Function DirectoryExists(DirectoryPath As String) As Boolean
-    ' Returns True if the given <DirectoryPath> exists
-    On Error Resume Next
-    DirectoryExists = ((GetAttr(DirectoryPath) And vbDirectory) = vbDirectory)
-    On Error GoTo 0
 End Function
 
 
