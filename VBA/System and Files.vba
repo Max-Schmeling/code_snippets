@@ -8,7 +8,7 @@ End Function
 Function GetFileBasename(Filepath As String, Optional PathSeparator As String = "\") As String
     ' Extracts the filename from the given <Filepath> and returns it without the extension.
     ' WARNING: If a directory is supplied instead of a filepath it will be treated as a file
-    '          if it does not end with a <FolderSeparator>. E.g. "C:\FolderOne\FolderTwo"
+    '          if it does not end with a <PathSeparator>. E.g. "C:\FolderOne\FolderTwo"
     ' Written by Max Schmeling
     Dim PosDot As Integer
     Dim PosSep As Integer
