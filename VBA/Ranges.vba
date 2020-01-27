@@ -40,6 +40,21 @@ Function IsCellRange() As Boolean
         IsCellRange = True
     End If
 End Function
+			
+			
+Sub ShowAllCells(Ws As Worksheet)
+    ' Applies the following changes on the given Worksheet
+    ' 1. Resets all filters (if any are set)
+    ' 2. Unhide all hidden cells
+    ' 3. Expand all collapsed groups
+    ' Written for Microsoft Excel by Max Schmeling
+    On Error Resume Next
+    Ws.AutoFilter.ShowAllData
+    Ws.Columns.EntireColumn.Hidden = False
+    Ws.Rows.EntireRow.Hidden = False
+    Ws.Outline.ShowLevels RowLevels:=8, ColumnLevels:=8
+    On Error GoTo 0
+End Sub
 
 
 Function ColumnLetter(ColumnNumber As Variant) As String
