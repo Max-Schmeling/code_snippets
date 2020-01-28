@@ -49,7 +49,7 @@ Sub ShowAllCells(Ws As Worksheet)
     ' 3. Expand all collapsed groups
     ' Written for Microsoft Excel by Max Schmeling
     On Error Resume Next
-    Ws.AutoFilter.ShowAllData
+    Ws.ShowAllData
     Ws.Columns.EntireColumn.Hidden = False
     Ws.Rows.EntireRow.Hidden = False
     Ws.Outline.ShowLevels RowLevels:=8, ColumnLevels:=8
