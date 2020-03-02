@@ -1,7 +1,7 @@
 Function GetFilename(Filepath As String, Optional PathSeparator As String) As String
     ' Extracts the filename from the given <Filepath> and returns it.
     ' Written by Max Schmeling
-    If IsEmpty(PathSeparator) Then PathSeparator = Application.PathSeparator
+    If PathSeparator = "" Then PathSeparator = Application.PathSeparator
     GetFilename = Right(Filepath, Len(Filepath) - InStrRev(Filepath, PathSeparator))
 End Function
 
@@ -13,7 +13,7 @@ Function GetFileBasename(Filepath As String, Optional PathSeparator As String) A
     ' Written by Max Schmeling
     Dim PosDot As Integer
     Dim PosSep As Integer
-    If IsEmpty(PathSeparator) Then PathSeparator = Application.PathSeparator
+    If PathSeparator = "" Then PathSeparator = Application.PathSeparator
     PosDot = InStrRev(Filepath, ".")
     PosSep = InStrRev(Filepath, PathSeparator)
     If Trim$(Filepath) = vbNullString Then Exit Function
@@ -23,17 +23,22 @@ End Function
 
 Function GetFileExtension(Filepath As String, Optional PathSeparator As String) As String
     ' Extracts the extension of the given <Filepath> and returns it.
+    ' Takes care of filepaths without path separator and misleading dots "." and no dots
     ' Written by Max Schmeling
     Dim PosDot As Integer
+    Dim PosSep As Integer
+    If PathSeparator = "" Then PathSeparator = Application.PathSeparator
     PosDot = InStrRev(Filepath, ".")
-    If IsEmpty(PathSeparator) Then PathSeparator = Application.PathSeparator
-    GetFileExtension = Right(Filepath, IIf(PosDot < InStrRev(Filepath, PathSeparator), 0, Len(Filepath) - PosDot))
+    PosSep = InStrRev(Filepath, PathSeparator)
+    If (PosSep <= 0 Or PosDot > PosSep) And PosDot > 0 Then
+        GetFileExtension = Right(Filepath, Len(Filepath) - PosDot)
+    End If
 End Function
 
 
 Function JoinPath(Path1 As String, Path2 As String, Optional PathSeparator As String)
     ' Returns <Path1> and <Path2> concatenated.
-    If IsEmpty(PathSeparator) Then PathSeparator = Application.PathSeparator
+    If PathSeparator = "" Then PathSeparator = Application.PathSeparator
     If Right$(Path1, 1) = PathSeparator Then
         JoinPath = Path1 & Path2
     Else
