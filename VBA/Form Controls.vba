@@ -1,3 +1,20 @@
+Private Sub TextBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    ' Only allows numbers in textbox when the types something.
+    ' For Microsoft Office Forms
+    
+    If KeyAscii > 9 Or KeyAscii < 48 Then
+        If KeyAscii = Asc("-") Then ' allow negative sign
+            If InStr(1, Me.TextBox1.Value, "-") > 0 Or _
+               Me.TextBox1.SelStart > 0 Then KeyAscii = 0
+        ElseIf KeyAscii = Asc(Application.DecimalSeparator) Then ' allow decimals
+            If InStr(1, Me.TextBox1.Value, Application.DecimalSeparator) > 0 Then KeyAscii = 0
+        Else ' disallow anything else
+            KeyAscii = 0
+        End If
+    End If
+End Sub
+
+
 Function GetSelectedIndex(ListBoxObj As MSForms.ListBox) As Long
     ' Returns the index (0-based) of the selected item if an item is selected.
     ' If no item is selected -1 will be returned.
