@@ -76,6 +76,81 @@ Function ColumnLetter(ColumnNumber As Variant) As String
 End Function
 
 
+Sub Reset_Formats()
+    ' Resets all format settings to default
+    ' For Microsoft Excel
+    
+    Dim TargetRange As Range
+    
+    Set TargetRange = Selection
+    
+    ' Number Format
+    TargetRange.NumberFormat = "General"
+    
+    ' Alignment
+    With TargetRange
+        .HorizontalAlignment = xlLeft
+        .VerticalAlignment = xlBottom
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+    
+    ' Font
+    With TargetRange.Font
+        .Name = Application.StandardFont
+        .FontStyle = "Standard"
+        .Size = Application.StandardFontSize
+        .Background = xlBackgroundAutomatic
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ColorIndex = xlAutomatic
+        .TintAndShade = 0
+        .ThemeFont = xlThemeFontMinor
+'        .Underline = xlUnderlineStyleNone
+'        .Bold = xlUnderlineStyleNone
+'        .Italic = xlUnderlineStyleNone
+    End With
+    
+    ' Borders
+    TargetRange.Borders(xlDiagonalDown).LineStyle = xlNone
+    TargetRange.Borders(xlDiagonalUp).LineStyle = xlNone
+    TargetRange.Borders(xlEdgeLeft).LineStyle = xlNone
+    TargetRange.Borders(xlEdgeTop).LineStyle = xlNone
+    TargetRange.Borders(xlEdgeBottom).LineStyle = xlNone
+    TargetRange.Borders(xlEdgeRight).LineStyle = xlNone
+    TargetRange.Borders(xlInsideVertical).LineStyle = xlNone
+    TargetRange.Borders(xlInsideHorizontal).LineStyle = xlNone
+    
+    ' Interior
+    With TargetRange.Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    
+    ' Protection
+    TargetRange.Locked = True
+    TargetRange.FormulaHidden = False
+    
+    ' Table formats
+    Dim Tbl As ListObject
+    For Each Tbl In TargetRange.Parent.ListObjects
+        If Not Intersect(Tbl.Range, TargetRange) Is Nothing Then
+            Tbl.TableStyle = ""
+        End If
+    Next Tbl
+End Sub
+
+
 Sub Selection_ConvertFormulaToValue()
     ' Convert each formula in the current <Selection> into its value
     ' For Microsoft Excel by Max Schmeling
