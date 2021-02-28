@@ -4,7 +4,7 @@ Here you will find a non-exhaustive list of procedures functions and other code 
 
 I created this compilation to give back to the ones, who have been willing to enrich the internet with their contributions. Most snippets were written by myself. Some were taken from the community and edited. If you find yourself reinventing the wheel, in a particular programming task, I might got you covered.
 
-The license in short: Do whatever you want (to make the world a better place) just don't sue me.
+Do whatever you want with those snippets (to make the world a better place) just don't sue me.
 
 ### Programming languages
 - Python 3
