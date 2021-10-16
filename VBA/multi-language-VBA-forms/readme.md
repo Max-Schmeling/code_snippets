@@ -1,0 +1,2 @@
+This is an implementation of a mechanism to build multi-language VBA-Forms. Essentially, the same text in different languages is identified by a text ID. The language is determined by a public variable named ´Langugae´. The database which maps text IDs to the texts of the individual languages is an Excel sheet as shown in the screenshot below:
+![a screenshot should have been displayed here]("./multi-language-VBA-forms/locale_worksheet_template.png")
