@@ -1,4 +1,4 @@
-## Code Snippets :grin:
+## Code Snippets
 
 Here you will find a non-exhaustive list of procedures functions and other code snippets for various programming languages. The individual snippets are categorized according to usage... but are kept functionally independent... mainly.
 
